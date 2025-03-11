@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assessment Rating Adjuster</title>
+</head>
+<body>
+    <h1>Assessment Rating Adjuster</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="json_file" accept=".json"><br><br>
+        <input type="submit" value="Adjust Ratings">
+    </form>
+
+    {% if result %}
+        {% if result.error %}
+            <p style="color: red;">{{ result.error }}</p>
+        {% else %}
+            <h2>Results:</h2>
+            <p>Overall Adjusted Rating: {{ result.overall_rating|round(2) }}</p>
+            <p>Overall Rating: {{ result.actual_rating|round(2) }}</p>
+
+            {% if result.misaligned_questions %}
+                <h3>Adjusted Questions:</h3>
+                {% for question in result.misaligned_questions %}
+                    <p>
+                        <strong>Question:</strong> {{ question.question }}<br>
+                        <strong>Original Rating:</strong> {{ question.original_rating }}<br>
+                        <strong>Remarks:</strong> {{ question.remarks }}<br>
+                        <strong>Adjusted Rating:</strong> {{ question.calculated_rating }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+</body>
+</html>
