@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assessment Confidence Checker</title>
+</head>
+<body>
+    <h1>Assessment Confidence Checker</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="json_file" accept=".json"><br><br>
+        <input type="submit" value="Calculate Confidence">
+    </form>
+
+    {% if result %}
+        {% if result.error %}
+            <p style="color: red;">{{ result.error }}</p>
+        {% else %}
+            <h2>Results:</h2>
+            <p>Overall Confidence: {{ result.overall_confidence|round(2) }}</p>
+
+            {% if result.misaligned_questions %}
+                <h3>Misaligned Questions:</h3>
+                {% for question in result.misaligned_questions %}
+                    <p> 
+                        <hr>
+                        <strong>Question:</strong> {{ question.question }}<br>
+                        <strong>Rating:</strong> {{ question.rating }}<br>
+                        <strong>Remarks:</strong> {{ question.remarks }}<br>
+                        <strong>Confidence:</strong> {{ question.confidence|round(2) }}
+                        <hr>
+                    </p>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+</body>
+</html>

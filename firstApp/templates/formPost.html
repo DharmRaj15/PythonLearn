@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}   |Form Page {% endblock %}
+{% block content %}
+    <header>
+    <h1>Form Page</h1>
+    </header>
+    <main>
+        <form method="POST" action="{{ url_for('formPost') }}">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+            <input type="submit" value="Submit">
+        </form>
+
+        {% if name and email %}
+            <h2>Your Input:</h2>
+            <p>Name: {{ name }}</p>
+            <p>Email: {{ email }}</p>
+        {% endif %}
+
+
+        <form method="POST" action="{{ url_for('upload_excel') }}" enctype="multipart/form-data">
+            <label for="excelFile">Upload Excel File:</label>
+            <input type="file" id="file" name="file" accept="*" required><br><br>
+            <input type="submit" value="Upload">
+        </form>
+
+
+        <form method="POST" action="{{ url_for('convert_csv') }}" enctype="multipart/form-data">
+            <label for="excelFile">Covert File To CSV</label>
+            <input type="file" id="file" name="file" accept="*" required><br><br>
+            <input type="submit" value="Upload File">
+        </form>
+
+
+        <a href="{{url_for('index')}}">Return Home...</a>
+
+    </main>
+
+{% endblock %}
